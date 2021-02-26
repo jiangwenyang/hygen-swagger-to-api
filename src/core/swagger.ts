@@ -1,11 +1,15 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const getSwaggerDoc = async (url: string) => {
-  const response = await fetch(url);
-  if (response.ok) {
-    return await response.json();
-  } else {
-    console.log(response.text());
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error(await response.text());
+    }
+  } catch (error) {
+    console.log(`请求失败：${error}`);
   }
 };
 
